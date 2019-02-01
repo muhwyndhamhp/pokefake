@@ -4,11 +4,12 @@
   "description": "personal game project using phaser 3, based on tutorials found in https://medium.com/@michaelwesthadley/modular-game-worlds-in-phaser-3-tilemaps-1-958fc7e6bbd6",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "",
+    "start": ""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/muhwyndhamhp/pokefake.git"
+    "url": "git+https://github.com/muhwsyndhamhp/pokefake.git"
   },
   "author": "muhwyndham",
   "license": "ISC",
