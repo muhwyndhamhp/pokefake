@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/muhwyndhamhp/pokefake/issues"
   },
-  "homepage": "https://github.com/muhwyndhamhp/pokefake#readme"
+  "homepage": "https://github.com/muhwyndhamhp/pokefake#readme",
+  "dependencies": {
+    "cycle": "^1.0.3"
+  }
 }

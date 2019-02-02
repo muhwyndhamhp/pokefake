@@ -20,7 +20,6 @@ const config = {
     }
 };
 
-
 const game = new Phaser.Game(config);
 let cursors;
 let player;
@@ -47,8 +46,8 @@ function create() {
     const spawnPoint = map.findObject("Objects", obj => obj.name === "spawn");
 
     player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "atlas", "misa-front")
-    .setSize(30, 40)
-    .setOffset(0, 24);
+    .setSize(8, 8)
+    .setOffset(0, 48);
 
     this.physics.add.collider(player, worldLayer);
 
@@ -57,7 +56,7 @@ function create() {
     anims.create({
         key: "misa-left-walk",
         frames: anims.generateFrameNames("atlas", {
-            prefix: "misa-left-walk", start: 0, end: 3, zeroPad: 3
+            prefix: "misa-left-walk.", start: 0, end: 3, zeroPad: 3
         }),
         frameRate: 10,
         repeat: -1
@@ -65,7 +64,7 @@ function create() {
     anims.create({
         key: "misa-right-walk",
         frames: anims.generateFrameNames("atlas", {
-            prefix: "misa-right-walk", start: 0, end: 3, zeroPad: 3
+            prefix: "misa-right-walk.", start: 0, end: 3, zeroPad: 3
         }),
         frameRate: 10,
         repeat: -1
@@ -73,7 +72,7 @@ function create() {
     anims.create({
         key: "misa-front-walk",
         frames: anims.generateFrameNames("atlas", {
-            prefix: "misa-front-walk", start: 0, end: 3, zeroPad: 3
+            prefix: "misa-front-walk.", start: 0, end: 3, zeroPad: 3
         }),
         frameRate: 10,
         repeat: -1
@@ -81,7 +80,7 @@ function create() {
     anims.create({
         key: "misa-back-walk",
         frames: anims.generateFrameNames("atlas", {
-            prefix: "misa-back-walk", start: 0, end: 3, zeroPad: 3
+            prefix: "misa-back-walk.", start: 0, end: 3, zeroPad: 3
         }),
         frameRate: 10,
         repeat: -1
@@ -103,7 +102,7 @@ function create() {
 
     this.input.keyboard.once("keydown_D", event => {
 
-        this.physics.world.createDebugGraphics();
+        this.physics.world.createDebugGraphic();
         
         const debugGraphics = this.add.graphics().setAlpha(0.75).setDepth(20);
 
@@ -125,14 +124,28 @@ function update(time, delta) {
 
     if(cursors.left.isDown) {
         player.body.setVelocityX(-speed);
+        player.anims.play("misa-left-walk", true);
     } else if (cursors.right.isDown) {
         player.body.setVelocityX(speed);
+        player.anims.play("misa-right-walk", true);
     } else if(cursors.up.isDown) {
         player.body.setVelocityY(-speed);
+        player.anims.play("misa-back-walk", true);
     } else if (cursors.down.isDown) {
         player.body.setVelocityY(speed);
+        player.anims.play("misa-front-walk", true);
     } else {
         player.anims.stop();
+
+        if(prevVelocity.x < 0) {
+            player.setTexture("atlas", "misa-left");
+        } else if(prevVelocity.x > 0) {
+            player.setTexture("atlas", "misa-right");
+        } else if(prevVelocity.y < 0) {
+            player.setTexture("atlas", "misa-back");
+        } else if(prevVelocity.y > 0) {
+            player.setTexture("atlas", "misa-front");
+        }
     }
 
     player.body.velocity.normalize().scale(speed);
